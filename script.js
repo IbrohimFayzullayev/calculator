@@ -20,7 +20,7 @@ const nuqta = document.querySelector(".nuqta");
 const teng = document.querySelector(".teng");
 const plus_minus = document.querySelector(".plus_minus");
 const bol = document.querySelector(".bolish");
-let arr = [];
+
 let check = true;
 num0.addEventListener("click", () => {
   nat.textContent += 0;
@@ -56,7 +56,7 @@ num7.addEventListener("click", () => {
 });
 qosh.addEventListener("click", () => {
   if (check) {
-    nat.textContent += "+";
+    nat.textContent += " " + "+" + " ";
     check = false;
   }
 });
@@ -70,25 +70,25 @@ num9.addEventListener("click", () => {
 });
 bol.addEventListener("click", () => {
   if (check) {
-    nat.textContent += "/";
+    nat.textContent += " " + "/" + " ";
     check = false;
   }
 });
 kopaytir.addEventListener("click", () => {
   if (check) {
-    nat.textContent += "*";
+    nat.textContent += " " + "*" + " ";
     check = false;
   }
 });
 qoldiq.addEventListener("click", () => {
   if (check) {
-    nat.textContent += "%";
+    nat.textContent += " " + "%" + " ";
     check = false;
   }
 });
 ayir.addEventListener("click", () => {
   if (check) {
-    nat.textContent += "-";
+    nat.textContent += " " + "-" + " ";
     check = false;
   }
 });
@@ -103,5 +103,42 @@ clear.addEventListener("click", () => {
   check = true;
 });
 teng.addEventListener("click", () => {
-  nat.textContent = eval(nat.textContent);
+  // nat.textContent = eval(nat.textContent);
+  let arr = nat.textContent.split(" ");
+  for (let i = 0; i < arr.length + 1; i++) {
+    if (arr[i] == "%") {
+      let sum = Number(arr[i - 1] / 100) * Number(arr[i + 1]);
+      arr.splice(i - 1, 3, sum);
+      i = 0;
+    }
+  }
+  for (let i = 0; i < arr.length + 1; i++) {
+    if (arr[i] == "*") {
+      let sum = Number(arr[i - 1]) * Number(arr[i + 1]);
+      arr.splice(i - 1, 3, sum);
+      i = 0;
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == "/") {
+      let sum = Number(arr[i - 1]) / Number(arr[i + 1]);
+      arr.splice(i - 1, 3, sum);
+      i = 0;
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == "+") {
+      let sum = Number(arr[i - 1]) + Number(arr[i + 1]);
+      arr.splice(i - 1, 3, sum);
+      i = 0;
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == "-") {
+      let sum = Number(arr[i - 1]) - Number(arr[i + 1]);
+      arr.splice(i - 1, 3, sum);
+      i = 0;
+    }
+  }
+  nat.textContent = arr.join("");
 });
